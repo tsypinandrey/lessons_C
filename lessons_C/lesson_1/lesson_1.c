@@ -25,7 +25,7 @@ double power(int number, int degree) // функция возведения це
     return p;
 }
 
-int NumberImput() // функция проверка ввода числа
+int NumberInput() // функция проверка ввода числа
 {
     int n;
     while (scanf_s("%d", &n)  == 0) // если вы ввели не число повторяем ввод снова
@@ -45,9 +45,9 @@ int main()
     {
         printf("Возведение целого числа в степень.\n");
         printf("Введите целое число: ");
-        number = NumberImput();
+        number = NumberInput();
         printf("Введите степень числа: ");
-        degree = NumberImput();
+        degree = NumberInput();
         while (getchar() != '\n') // очистка буфера ввода
             continue;
         printf("Результат возведения числа %d в степень %d равно: %f\n\n", number, degree, power(number, degree));

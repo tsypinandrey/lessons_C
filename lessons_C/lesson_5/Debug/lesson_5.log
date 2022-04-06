@@ -1,0 +1,4 @@
+﻿  lesson_5.c
+D:\learning_C\lessons_C\lesson_5\lesson_5.c(25): warning C4715: upper: значение возвращается не при всех путях выполнения
+D:\learning_C\lessons_C\lesson_5\lesson_5.c(15): warning C4715: lower: значение возвращается не при всех путях выполнения
+  lesson_5.vcxproj -> D:\learning_C\lessons_C\Debug\lesson_5.exe
