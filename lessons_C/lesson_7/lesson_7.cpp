@@ -3,63 +3,77 @@
 // Создание меню выбора
 
 #include <stdio.h>
+#include <wchar.h>
+#include <locale.h>
 #include <Windows.h>
 
-#define START 1
+static int s_start = 1; // первая строка меню
+static int s_fihish = 1; // последняя строка меню
 
-static int s_fihish = 1;
+void GlMenu(); // функция главного меню
+int NumberInput(); // функция проверка ввода числа
+void Task(wchar_t& ch, int digit); // Запуск какой либо функции
+
+int main()
+{
+    setlocale(LC_ALL, "Rus");
+    SetConsoleOutputCP(1251);
+    SetConsoleCP(1251);
+    int digit = 0; // для выбора номера меню
+    wchar_t ch = ' ';
+    while (digit != s_fihish) {
+        GlMenu(); // функция главного меню
+        digit = NumberInput(); // номер выбраного меню
+        switch (digit)
+        {
+        case 1:
+            Task(ch, digit);
+            break;
+        case 2:
+            Task(ch, digit); 
+            break;
+        case 3:
+            Task(ch, digit);
+            break;
+        default :
+            break;
+        }
+        ch = ' ';
+     }
+    system("cls"); // системный вызов очистки экрана для ОС Window 
+    return 0;
+}
 
 void GlMenu() // функция главного меню
 {
-    printf("%d) Функция для переворачивания строки.\n", START);
-    printf("%d) Next function.\n", ++s_fihish);
-    printf("%d) Завершить!\n", ++s_fihish);
-    printf("Выберите пункт меня для продолжения: ");
+    system("cls"); // системный вызов очистки экрана для ОС Window 
+    // при каждом вызовве функции меню обновляем счетчики первой и последней строки меню
+    s_start = 1; // первая строка меню при каждом вызове эта переменная обновляеться
+    s_fihish = 1; // последняя строка меню при каждом вызове эта переменная обновляеться
+    printf("%d) Программа 1.\n", s_start); // первая строка нашего меню
+    printf("%d) Программа 2.\n", ++s_fihish); // следующая строка нашего меню
+    printf("%d) Программа 3.\n", ++s_fihish); // следующая строка нашего меню
+    printf("%d) Завершить!\n", ++s_fihish); // посленяя строка нашего меню
+    printf("Выберите пункт меню: ");
 }
 
 int NumberInput() // функция проверка ввода числа
 {
     int n = 1;
-    while (scanf_s("%d", &n) == 0 || n < START || n > s_fihish) // если вы ввели не число повторяем ввод снова
+    while (scanf_s("%d", &n) == 0 || n < s_start || n > s_fihish) // если вы ввели не число повторяем ввод снова
     {
-            fseek(stdin, 0, SEEK_SET); // очистка буфера ввода при неправильно вводе
-            printf("Ошибка! Необходимо ввести число от %d до %d: ", START, s_fihish);
+        fseek(stdin, 0, SEEK_SET); // очистка буфера ввода при неправильном вводе
+        printf("Ошибка! Необходимо ввести число от %d до %d: ", s_start, s_fihish);
     }
-    while (getchar() != '\n') // очистка буфера ввода
-        continue;
     return n;
 }
-
-void reverse()
+void Task(wchar_t& ch, int digit) // Запуск какой либо функции
 {
-    printf("Введите слово: ");
-    char s[255];
-    s[0] = '\0';
-    int i, j;
-    char ch;
-    scanf_s("%s", &s, 255);
-    for (i = 0, j = strlen(s) - 1; j > i; ++i, --j)
+    while (ch != 'n' && ch != 'N' && ch != L'н' && ch != L'Н')
     {
-        ch = s[i];
-        s[i] = s[j];
-        s[j] = ch;
+        fseek(stdin, 0, SEEK_SET); // очистка буфера ввода
+        printf("Это меню № %d\n", digit); // Вместо этой строки вставляем свою функцию для выполнения
+        printf("Для продолжения <Y>/<Д>, для завершения <N>/<Н>: ");
+        ch = getwchar();
     }
-    printf("%s\n", s);
-}
-
-int main()
-{
-    SetConsoleOutputCP(1251);
-    SetConsoleCP(1251);
-    GlMenu(); // функция главного меню
-    int digit = NumberInput(); // номер выбраного меню
-    switch (digit)
-    {
-    case 1: reverse();
-        break;
-    case 2: break;
-    case 3: break;
-    }
-    printf("Well Don!\n");
-    return 0;
 }
